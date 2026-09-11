@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dja4fbbjnq8qf"
-path.s3tc="res://.godot/imported/vest_armor_holster_lowpoly_gameready_pack_4.png-13781ea3d416abaab81592a1fb06dc5f.s3tc.ctex"
+uid="uid://bqqxyjl8d3mjh"
+path.s3tc="res://.godot/imported/vest_armor_holster_lowpoly_gameready_pack_5.png-cfddb688df093b1c4a5799721b51c271.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "dc6e62cbf25593d303f89f041193ae8d"
+"md5": "4d54a8e44098f19013dd3c38ed50d3eb"
 }
 
 [deps]
 
-source_file="res://global_resources/mesh/BulletProofVest/vest_armor_holster_lowpoly_gameready_pack_4.png"
-dest_files=["res://.godot/imported/vest_armor_holster_lowpoly_gameready_pack_4.png-13781ea3d416abaab81592a1fb06dc5f.s3tc.ctex"]
+source_file="res://global_resources/mesh/bullet_proof_vest/vest_armor_holster_lowpoly_gameready_pack_5.png"
+dest_files=["res://.godot/imported/vest_armor_holster_lowpoly_gameready_pack_5.png-cfddb688df093b1c4a5799721b51c271.s3tc.ctex"]
 
 [params]
 

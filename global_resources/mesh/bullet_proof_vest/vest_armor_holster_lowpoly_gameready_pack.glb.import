@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://d2or4uy26xawd"
-path="res://.godot/imported/vest_armor_holster_lowpoly_gameready_pack.glb-62a3fb1349d6479fa2fc6db84cf4ff25.scn"
+path="res://.godot/imported/vest_armor_holster_lowpoly_gameready_pack.glb-c6d4626f3060bdbc99520281595acc41.scn"
 
 [deps]
 
-source_file="res://global_resources/mesh/BulletProofVest/vest_armor_holster_lowpoly_gameready_pack.glb"
-dest_files=["res://.godot/imported/vest_armor_holster_lowpoly_gameready_pack.glb-62a3fb1349d6479fa2fc6db84cf4ff25.scn"]
+source_file="res://global_resources/mesh/bullet_proof_vest/vest_armor_holster_lowpoly_gameready_pack.glb"
+dest_files=["res://.godot/imported/vest_armor_holster_lowpoly_gameready_pack.glb-c6d4626f3060bdbc99520281595acc41.scn"]
 
 [params]
 

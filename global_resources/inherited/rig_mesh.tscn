@@ -2,4 +2,4 @@
 
 [ext_resource type="PackedScene" uid="uid://cngu1bj0j1pqa" path="res://global_resources/mesh/character/rig_mesh.glb" id="1_oiwac"]
 
-[node name="rig_mesh" unique_id=1531407070 instance=ExtResource("1_oiwac")]
+[node name="RigMesh" unique_id=1531407070 instance=ExtResource("1_oiwac")]
