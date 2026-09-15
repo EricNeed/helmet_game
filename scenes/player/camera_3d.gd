@@ -10,8 +10,9 @@ var camera_rotate_y := 0.0 #current rotation around y axis
 
 @onready var player := owner
 @onready var rig_mesh := player.get_node("RigMesh")
-@onready var skeleton := rig_mesh.get_node("Armature_001/Skeleton3D")
+@onready var skeleton := rig_mesh.get_node("Armature_001/Skeleton3D") as Skeleton3D
 @onready var headBone = skeleton.find_bone("Bone.002")
+@onready var head_rotation_mod := skeleton.get_node("HeadRotation")
 enum CameraMode{
 	HELMET_VIEW,
 	FIRST_PERSON,
@@ -40,16 +41,18 @@ func process_mouse_delta(event: InputEvent) -> void:
 	#update the camera in different perspective mode
 	camera_funcs[camera_mode].call(camera_rotate_y, camera_rotate_x)
 	
-	rig_mesh.position = Vector3(0, -0.86, camera_rotate_x/-90 * 0.3)
+	head_rotation_mod.change_rotation(camera_rotate_x, camera_rotate_y)
 var camera_funcs = [
-	func(y:float, x:float)->void: #HELMET
+	func(y:float, _x:float)->void: #HELMET
 		player.rotation_degrees.y = y,
 	func(y:float, x:float)->void: #First person
 		player.rotation_degrees.y = y
-		rotation_degrees.x = x,
-	func(y:float, x:float)->void: #third person
+		rotation_degrees.x = x
+		rig_mesh.position = Vector3(0, -0.86, camera_rotate_x/-90 * 0.3),
+	func(y:float, _x:float)->void: #third person
 		player.rotation_degrees.y = y,
 ]
+
 
 # get camera rotation, for other scripts
 func get_camera_rotation() -> Vector2:
@@ -63,7 +66,14 @@ func set_camera_rotation(rotation_x, rotation_y) -> void:
 
 @export var camera_mode := CameraMode.FIRST_PERSON:
 	set(value):
-		var head_size := Vector3.ZERO if value == CameraMode.FIRST_PERSON else Vector3.ONE
+		var head_size:Vector3
+		if value == CameraMode.FIRST_PERSON:
+			head_size = Vector3.ZERO
+			head_rotation_mod.active = false
+		else:
+			head_size = Vector3.ONE
+			head_rotation_mod.active = true
+			rig_mesh.position = Vector3(0, -0.86, 0)
 		skeleton.set_bone_pose_scale(headBone, head_size)
 		camera_mode = value
 		self.reparent(cam_locations[value], false)
