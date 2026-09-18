@@ -3,14 +3,17 @@ class_name BoneRotationModifier
 extends SkeletonModifier3D
 
 @export var bone_name: String
+@export_range(0.0, 1.0) var reduction_strength: float = 0.5 # 0 = normal animation, 1 = full lock to rest pose
 var bone_index := -1
+var upperbody_index := -1
 var skeleton:Skeleton3D
 
 func _ready():
 	skeleton = get_skeleton()
 	bone_index = skeleton.find_bone(bone_name)
 	if bone_index <= 0: push_error("Bone not found")
-
+	upperbody_index = skeleton.get_bone_parent(bone_index)
+	#upperbody_index = skeleton.get_bone_parent(upperbody_index)
 
 var _rotation_x := 0.0
 var _rotation_y := 0.0
@@ -21,6 +24,11 @@ func change_rotation(rotation_x:float, rotation_y:float):
 
 func _process_modification_with_delta(_delta: float) -> void:
 	pass
+	var current_pose: Transform3D = skeleton.get_bone_pose(upperbody_index)
+	var rest_pose: Transform3D = skeleton.get_bone_rest(upperbody_index)
+	#current_pose.basis = current_pose.basis.slerp(rest_pose.basis, reduction_strength)
+	current_pose.basis = rest_pose.basis
+	
 	var direction_vec3 := Vector3(0, 0, _rotation_x)
 	skeleton.set_bone_pose_rotation(bone_index, Quaternion.from_euler(direction_vec3))
 	
