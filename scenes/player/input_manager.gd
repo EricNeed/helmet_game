@@ -4,7 +4,7 @@ extends Node
 func _unhandled_input(event: InputEvent) -> void:
 	#handle mouse input
 	if event is InputEventMouseMotion:
-		if not (Input.mouse_mode == Input.MOUSE_MODE_CAPTURED): return	
+		if not (Input.mouse_mode == Input.MOUSE_MODE_CAPTURED): return
 		camera.process_mouse_delta(event)
 
 	# handle press escape to free mouse
@@ -19,6 +19,8 @@ func _unhandled_input(event: InputEvent) -> void:
 		if next_enum >= camera.CameraMode.size(): next_enum = 0
 		camera.camera_mode = next_enum
 	
+	elif event.is_action_pressed("shift"):
+		pass
 	else:
 		return
 	

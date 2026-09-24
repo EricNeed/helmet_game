@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://kw0av2lybqce"]
+
+[ext_resource type="PackedScene" uid="uid://u3bdrahobevo" path="res://scenes/item/item_main/item.tscn" id="1_jufws"]
+[ext_resource type="PackedScene" uid="uid://d1h6dvpbhn3fs" path="res://global_resources/inherited/magnum_mesh.tscn" id="2_jufws"]
+
+[node name="Item" unique_id=1202617992 instance=ExtResource("1_jufws")]
+
+[node name="magnum" parent="." index="0" unique_id=35458566 instance=ExtResource("2_jufws")]

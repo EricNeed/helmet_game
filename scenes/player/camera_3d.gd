@@ -64,16 +64,24 @@ func set_camera_rotation(rotation_x, rotation_y) -> void:
 	camera_funcs[camera_mode].call(camera_rotate_y, camera_rotate_x)
 
 
+
+
 @export var camera_mode := CameraMode.FIRST_PERSON:
 	set(value):
 		var head_size:Vector3
+		# first person camera settings:
 		if value == CameraMode.FIRST_PERSON:
 			head_size = Vector3.ZERO
 			head_rotation_mod.active = false
+		# third person and helmet veiw settings:
 		else:
 			head_size = Vector3.ONE
 			head_rotation_mod.active = true
 			rig_mesh.position = Vector3(0, -0.86, 0)
+		
+		head_rotation_mod.reduction_strength = 0.8 if value == CameraMode.HELMET_VIEW else 0.01
+			
+				
 		skeleton.set_bone_pose_scale(headBone, head_size)
 		camera_mode = value
 		self.reparent(cam_locations[value], false)

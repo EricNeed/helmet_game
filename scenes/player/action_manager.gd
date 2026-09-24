@@ -7,8 +7,9 @@ enum ActionPart{
 }
 enum Actions{
 	NONE,
-	IDEL,
+	IDLE,
 	WALKING,
+	RUNNING,
 }
 var actions_info: Array[Array] = [] #[[priority, anim name in mesh, effect part],[...]]
 func _ready() -> void:
@@ -16,16 +17,17 @@ func _ready() -> void:
 	#small function that add action to a array
 	var _action_info = func(act_enum, priority, anim_name, effect_part): actions_info[act_enum] = [priority, anim_name, effect_part]
 	_action_info.call(Actions.NONE, 0, "", ActionPart.NONE)
-	_action_info.call(Actions.IDEL, 0, "Idel", ActionPart.FULLBODY)
+	_action_info.call(Actions.IDLE, 0, "Idle", ActionPart.FULLBODY)
 	_action_info.call(Actions.WALKING, 0, "walking_v2", ActionPart.FULLBODY)
+	_action_info.call(Actions.RUNNING, 0, "walking_v2_001", ActionPart.FULLBODY)
 
 
 ## current state of animation
-var _anim_body := Actions.IDEL
+var _anim_body := Actions.IDLE
 var _anim_upper := Actions.NONE
 
 
-func _play_animation(new_action: Actions):
+func _play_animation(new_action: Actions) -> void:
 	var action_info = actions_info[new_action]
 	
 	var is_upper_body := "AnimFullBody" if action_info[2] == ActionPart.FULLBODY else "AnimUpperBody"
@@ -37,15 +39,28 @@ func _play_animation(new_action: Actions):
 	$".".set("parameters/Blend2/blend_amount", blend_factor)
 
 
+### [return] true if success, false if not
+func start_action(action: Actions) -> bool:
+	var action_type = actions_info[action][2]
+	if action_type == ActionPart.FULLBODY:
+		_anim_body = action
+	elif action_type == ActionPart.UPPERBODY:
+		_anim_upper = action
+	else:
+		return false
+	_play_animation(action)
+	return true
+
+
 func start_walking():
 	_anim_body = Actions.WALKING
 	_play_animation(Actions.WALKING)
 func stop_walking():
-	_anim_body = Actions.IDEL
-	_play_animation(Actions.IDEL)
+	_anim_body = Actions.IDLE
+	_play_animation(Actions.IDLE)
 
 
-### [return] true if success, false if not
+
 #func add_action(action: Actions) -> bool:
 	#return true
 #

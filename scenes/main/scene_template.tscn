@@ -2,6 +2,7 @@
 
 [ext_resource type="Material" uid="uid://bdfontd20db33" path="res://global_resources/materials/placeholder_tile.tres" id="1_f1wjk"]
 [ext_resource type="PackedScene" uid="uid://cbg2ruj1ud8du" path="res://scenes/player/player.tscn" id="2_vxk1j"]
+[ext_resource type="PackedScene" uid="uid://d1h6dvpbhn3fs" path="res://global_resources/inherited/magnum_mesh.tscn" id="3_ifgi4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_tk74m"]
 sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
@@ -86,3 +87,5 @@ shape = SubResource("SphereShape3D_qabgp")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Ball" unique_id=827664296]
 mesh = SubResource("SphereMesh_qabgp")
+
+[node name="Magnum" parent="." unique_id=35458566 instance=ExtResource("3_ifgi4")]
