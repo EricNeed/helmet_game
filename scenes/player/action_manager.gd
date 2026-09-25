@@ -17,7 +17,7 @@ func _ready() -> void:
 	#small function that add action to a array
 	var _action_info = func(act_enum, priority, anim_name, effect_part): actions_info[act_enum] = [priority, anim_name, effect_part]
 	_action_info.call(Actions.NONE, 0, "", ActionPart.NONE)
-	_action_info.call(Actions.IDLE, 0, "Idle", ActionPart.FULLBODY)
+	_action_info.call(Actions.IDLE, 0, "Idel", ActionPart.FULLBODY)
 	_action_info.call(Actions.WALKING, 0, "walking_v2", ActionPart.FULLBODY)
 	_action_info.call(Actions.RUNNING, 0, "walking_v2_001", ActionPart.FULLBODY)
 
