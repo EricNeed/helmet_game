@@ -25,6 +25,9 @@ enum CameraMode{
 ]
 
 
+var center_screen = get_viewport().get_visible_rect().size / 2.0
+
+
 func _ready() -> void:
 	if headBone != -1:
 		skeleton.set_bone_pose_scale(headBone, Vector3.ZERO)
@@ -45,6 +48,7 @@ func process_mouse_delta(event: InputEvent) -> void:
 var camera_funcs = [
 	func(y:float, _x:float)->void: #HELMET
 		player.rotation_degrees.y = y,
+		
 	func(y:float, x:float)->void: #First person
 		player.rotation_degrees.y = y
 		rotation_degrees.x = x
@@ -63,7 +67,9 @@ func set_camera_rotation(rotation_x, rotation_y) -> void:
 	camera_rotate_x = rotation_x
 	camera_funcs[camera_mode].call(camera_rotate_y, camera_rotate_x)
 
-
+func apply_mousemode():
+	const mouse_mode_each := [Input.MOUSE_MODE_VISIBLE, Input.MOUSE_MODE_CAPTURED, Input.MOUSE_MODE_CAPTURED]
+	Input.mouse_mode = mouse_mode_each[camera_mode]
 
 
 @export var camera_mode := CameraMode.FIRST_PERSON:
@@ -80,9 +86,10 @@ func set_camera_rotation(rotation_x, rotation_y) -> void:
 			rig_mesh.position = Vector3(0, -0.86, 0)
 		
 		head_rotation_mod.reduction_strength = 0.8 if value == CameraMode.HELMET_VIEW else 0.01
-			
-				
+		
 		skeleton.set_bone_pose_scale(headBone, head_size)
 		camera_mode = value
 		self.reparent(cam_locations[value], false)
 		
+		# different camera mode uses different mousemode
+		apply_mousemode()

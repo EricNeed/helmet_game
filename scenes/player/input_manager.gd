@@ -12,7 +12,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 		
 	elif event.is_action_pressed("LMB") && Input.mouse_mode == Input.MOUSE_MODE_VISIBLE:
-		Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		camera.apply_mousemode()
 	
 	elif event.is_action_pressed("ui_filedialog_refresh"):
 		var next_enum = int(camera.camera_mode) + 1
