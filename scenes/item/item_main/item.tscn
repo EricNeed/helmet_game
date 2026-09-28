@@ -1,3 +1,10 @@
 [gd_scene format=3 uid="uid://u3bdrahobevo"]
 
-[node name="Item" type="Node3D" unique_id=1202617992]
+[ext_resource type="Script" uid="uid://duoy1x5oyn14l" path="res://scenes/item/item_main/item.gd" id="1_5lrmd"]
+
+[node name="Item" type="RigidBody3D" unique_id=1207774364 groups=["item"]]
+script = ExtResource("1_5lrmd")
+
+[node name="ItemMesh" type="MeshInstance3D" parent="." unique_id=1430172501]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1739738588]

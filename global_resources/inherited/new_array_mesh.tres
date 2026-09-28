@@ -1,4 +1,4 @@
-[gd_scene format=4 uid="uid://d1h6dvpbhn3fs"]
+[gd_resource type="ArrayMesh" format=4 uid="uid://c56erkka8aer8"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7jyl8"]
 resource_name = "01_-_Default"
@@ -20,7 +20,7 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_kxa3d"]
+[resource]
 resource_name = "Sketchfab_Scene_magnum_01 - Default_0"
 _surfaces = [{
 "aabb": AABB(-0.257995, -0.24416856, -0.051791772, 0.76621234, 0.32252803, 0.103583544),
@@ -38,6 +38,3 @@ _surfaces = [{
 }]
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_87a5b")
-
-[node name="Magnum" type="MeshInstance3D" unique_id=35458566]
-mesh = SubResource("ArrayMesh_kxa3d")

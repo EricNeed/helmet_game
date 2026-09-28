@@ -3,16 +3,21 @@ extends Camera3D
 ##	- camera rotation using mouse input
 ##  - adjustment during camera mode changes
 
+#camera related variable
 @export var camera_sensitivity := 0.2
 var camera_rotate_x := 0.0 #current rotation around x axis
 var camera_rotate_y := 0.0 #current rotation around y axis
+@export var ray_length := 1000.0
+var _current_selected_target: Node = null
 
-
+#neck bone placement
 @onready var player := owner
 @onready var rig_mesh := player.get_node("RigMesh")
 @onready var skeleton := rig_mesh.get_node("Armature_001/Skeleton3D") as Skeleton3D
 @onready var headBone = skeleton.find_bone("Bone.002")
 @onready var head_rotation_mod := skeleton.get_node("HeadRotation")
+
+#camera modes and the location each camera is place under in each camera mode
 enum CameraMode{
 	HELMET_VIEW,
 	FIRST_PERSON,
@@ -24,14 +29,53 @@ enum CameraMode{
 	player.get_node("CameraPos"),
 ]
 
+# the area mouse is allowed to move in helmet view, not use currently
+@onready var viewport := get_viewport()
+const mouse_move_area_size := 0.50 # percentage of screen w and h around the center
+var mouse_move_area: Rect2
+var calc_mouse_move_area = func() -> void: 
+	var screen_size := viewport.get_visible_rect().size * mouse_move_area_size
+	mouse_move_area = Rect2(screen_size / 2, screen_size)
 
-var center_screen = get_viewport().get_visible_rect().size / 2.0
+
 
 
 func _ready() -> void:
 	if headBone != -1:
 		skeleton.set_bone_pose_scale(headBone, Vector3.ZERO)
+	# call the function when screen size change
+	calc_mouse_move_area.call()
+	viewport.size_changed.connect(calc_mouse_move_area)
 
+
+## the raycast function to resolve both interactiion and target detection
+func _physics_process(delta: float) -> void:
+	var center_screen := get_viewport().get_visible_rect().size / 2.0
+	var origin := project_ray_origin(center_screen)
+	var end := origin + project_ray_normal(center_screen) * ray_length
+	
+	var query := PhysicsRayQueryParameters3D.create(origin, end)
+	query.collision_mask = 1 # Adjust mask as needed
+	
+	var space_state := get_world_3d().direct_space_state
+	var result := space_state.intersect_ray(query)
+	
+	# if hit a target
+	if result:
+		var node_hit: Node = result.collider
+		if node_hit != _current_selected_target:
+			if _current_selected_target:
+				_current_selected_target.item_deselected()
+				_current_selected_target = null
+			if node_hit.is_in_group("item"):
+				node_hit.item_selected()
+				_current_selected_target = node_hit
+			else:
+				_current_selected_target = null
+	else:
+		if _current_selected_target:
+			_current_selected_target.item_deselected()
+			_current_selected_target = null
 
 ## this function should only be called from the main input manager
 func process_mouse_delta(event: InputEvent) -> void:
@@ -54,7 +98,7 @@ var camera_funcs = [
 		rotation_degrees.x = x
 		rig_mesh.position = Vector3(0, -0.86, camera_rotate_x/-90 * 0.3),
 	func(y:float, _x:float)->void: #third person
-		player.rotation_degrees.y = y,
+		player.rotation_degrees.y = y
 ]
 
 
@@ -67,9 +111,11 @@ func set_camera_rotation(rotation_x, rotation_y) -> void:
 	camera_rotate_x = rotation_x
 	camera_funcs[camera_mode].call(camera_rotate_y, camera_rotate_x)
 
+
 func apply_mousemode():
-	const mouse_mode_each := [Input.MOUSE_MODE_VISIBLE, Input.MOUSE_MODE_CAPTURED, Input.MOUSE_MODE_CAPTURED]
-	Input.mouse_mode = mouse_mode_each[camera_mode]
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	#const mouse_mode_each := [Input.MOUSE_MODE_VISIBLE, Input.MOUSE_MODE_CAPTURED, Input.MOUSE_MODE_CAPTURED]
+	#Input.mouse_mode = mouse_mode_each[camera_mode]
 
 
 @export var camera_mode := CameraMode.FIRST_PERSON:
