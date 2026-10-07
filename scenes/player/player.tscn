@@ -6,7 +6,6 @@
 [ext_resource type="Script" uid="uid://bc8n5xvwqph04" path="res://scenes/player/input_manager.gd" id="3_bvqhm"]
 [ext_resource type="Script" uid="uid://d3kpyhljgpgo7" path="res://scenes/player/bone_rotation_mod.gd" id="4_0owmy"]
 [ext_resource type="Script" uid="uid://dwbvcmd0i7o6f" path="res://scenes/player/action_manager.gd" id="5_p47bc"]
-[ext_resource type="PackedScene" uid="uid://4tvag2j57mtq" path="res://global_resources/inherited/bullet_proof_vest.tscn" id="6_75vfm"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qabgp"]
 radius = 0.3
@@ -66,7 +65,7 @@ transitions = ["Start", "Idel", SubResource("AnimationNodeStateMachineTransition
 filter_enabled = true
 filters = ["Armature/Skeleton3D:Bone", "Armature/Skeleton3D:Bone.001", "Armature/Skeleton3D:lower_arm.l", "Armature/Skeleton3D:lower_arm.r", "Armature/Skeleton3D:shulder.l", "Armature/Skeleton3D:upper_arm.l", "Armature/Skeleton3D:upper_arm.r", "Armature_001/Skeleton3D:Bone", "Armature_001/Skeleton3D:Bone.001", "Armature_001/Skeleton3D:Bone.002", "Armature_001/Skeleton3D:lower_arm.l", "Armature_001/Skeleton3D:lower_arm.r", "Armature_001/Skeleton3D:shulder.l", "Armature_001/Skeleton3D:upper_arm.l", "Armature_001/Skeleton3D:upper_arm.r"]
 
-[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_q3lat"]
+[sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_75vfm"]
 nodes/output/position = Vector2(-40, 60)
 nodes/Blend2/node = SubResource("AnimationNodeBlend2_q3lat")
 nodes/Blend2/position = Vector2(-280, 60)
@@ -84,13 +83,13 @@ transform = Transform3D(-0.8, 0, -6.9938224e-08, 0, 0.8, 0, 6.9938224e-08, 0, -0
 
 [node name="Skeleton3D" parent="RigMesh/Armature_001" parent_id_path=PackedInt32Array(1531407070, 1551021247) index="0" unique_id=1364311360]
 bones/0/rotation = Quaternion(-0.023031306, -0.70673144, 0.02283893, 0.70673805)
-bones/1/rotation = Quaternion(-0.010021384, -0.05149827, -0.06932668, 0.99621356)
-bones/3/rotation = Quaternion(0.56935906, 0.08595174, 0.007213249, 0.81755155)
+bones/1/rotation = Quaternion(-0.0062701865, -0.052107893, 0.002911526, 0.9986176)
+bones/3/rotation = Quaternion(0.5517392, 0.018583871, 0.0855102, 0.82941335)
 bones/4/rotation = Quaternion(0.05811478, 0.0014195027, 0.012465537, 0.9982311)
 bones/6/rotation = Quaternion(-0.003087703, -0.6143469, 0.78861237, -0.025668245)
-bones/7/rotation = Quaternion(0.5693591, -0.08595175, -0.0072132275, 0.81755155)
+bones/7/rotation = Quaternion(0.55174094, -0.018590044, -0.08550309, 0.8294128)
 bones/8/rotation = Quaternion(0.058114752, -0.0014195113, -0.012465526, 0.9982311)
-bones/10/rotation = Quaternion(-0.00703485, -0.0006303013, -0.06729117, 0.9977084)
+bones/10/rotation = Quaternion(-0.015353544, 0.00040667504, -0.14567119, 0.9892138)
 bones/11/rotation = Quaternion(-0.68433726, 0.021981766, 0.72873414, -0.012080974)
 bones/12/rotation = Quaternion(-0.0139162075, -0.0004708979, -0.05697474, 0.9982785)
 bones/13/rotation = Quaternion(0.04749582, -0.002414982, 0.7127079, 0.699847)
@@ -98,36 +97,7 @@ bones/14/rotation = Quaternion(0.68433726, 0.021981766, 0.72873414, 0.012080974)
 bones/15/rotation = Quaternion(-0.0139162075, 0.0004708979, 0.05697474, 0.9982785)
 bones/16/rotation = Quaternion(0.04749582, 0.002414982, -0.7127079, 0.699847)
 
-[node name="HandRAttach" type="BoneAttachment3D" parent="RigMesh/Armature_001/Skeleton3D" index="1" unique_id=1833572268]
-transform = Transform3D(-0.008102535, 0.13307488, 0.9910726, 0.047394883, -0.9899408, 0.13331021, 0.9988433, 0.04805194, 0.0017139346, -0.32166588, 0.8951043, 0.07205704)
-bone_name = "hand.r"
-bone_idx = 5
-
-[node name="AttachSpot" type="Node3D" parent="RigMesh/Armature_001/Skeleton3D/HandRAttach" unique_id=1326755946]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
-
-[node name="HeadAttach" type="BoneAttachment3D" parent="RigMesh/Armature_001/Skeleton3D" index="2" unique_id=2135808172]
-transform = Transform3D(-0.10702422, 0.012886302, -0.9941728, -0.20608298, 0.9779136, 0.034860693, 0.9726642, 0.20861305, -0.10200476, 0.0023939898, 1.6759087, -0.0040173065)
-bone_name = "Bone.002"
-bone_idx = 10
-
-[node name="AttachSpot" type="Node3D" parent="RigMesh/Armature_001/Skeleton3D/HeadAttach" unique_id=80447030]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
-
-[node name="CameraPos" type="Node3D" parent="RigMesh/Armature_001/Skeleton3D/HeadAttach" unique_id=180185624]
-transform = Transform3D(0.10740523, -0.20529315, -0.9727892, -0.0136570735, 0.9780523, -0.2079117, 0.99412155, 0.03561626, 0.10224423, -0.15, 0.45, 0.21)
-
-[node name="BodyAttach" type="BoneAttachment3D" parent="RigMesh/Armature_001/Skeleton3D" index="3" unique_id=506846252]
-transform = Transform3D(-0.10401536, 0.013097946, -0.9944894, -0.07291037, 0.9971225, 0.020758443, 0.9918996, 0.074667774, -0.10276106, -0.0027641263, 1.283231, -0.033422276)
-bone_name = "Bone.001"
-bone_idx = 1
-
-[node name="AttachSpot" type="Node3D" parent="RigMesh/Armature_001/Skeleton3D/BodyAttach" unique_id=635880476]
-
-[node name="Vest_Vest_0" parent="RigMesh/Armature_001/Skeleton3D/BodyAttach/AttachSpot" unique_id=2010410711 instance=ExtResource("6_75vfm")]
-transform = Transform3D(-0.0014606108, 0.0017709995, 0.011753042, -2.4857745e-06, 0.010854281, -0.0019467726, -0.011910777, -0.00021944178, -0.0014408615, 0.088, 0.17, -0.016)
-
-[node name="HeadRotation" type="SkeletonModifier3D" parent="RigMesh/Armature_001/Skeleton3D" index="4" unique_id=1085474872]
+[node name="HeadRotation" type="SkeletonModifier3D" parent="RigMesh/Armature_001/Skeleton3D" index="1" unique_id=1085474872]
 unique_name_in_owner = false
 process_mode = 0
 process_priority = 0
@@ -148,6 +118,37 @@ script = ExtResource("4_0owmy")
 bone_name = "Bone.002"
 reduction_strength = 0.8
 metadata/_custom_type_script = "uid://d3kpyhljgpgo7"
+
+[node name="HandRAttach" parent="RigMesh/Armature_001/Skeleton3D" index="2" unique_id=172067122]
+transform = Transform3D(0.094874315, 0.111341104, 0.9892429, 0.97406715, -0.2154268, -0.069172285, 0.20540763, 0.97015184, -0.12889211, -0.29251567, 1.4470211, 0.6727212)
+
+[node name="HeadAttach" parent="RigMesh/Armature_001/Skeleton3D" index="3" unique_id=894871911]
+transform = Transform3D(-0.107024215, 0.012886308, -0.99417293, -0.21950574, 0.974937, 0.036267098, 0.9697231, 0.22210811, -0.10151323, 0.002393994, 1.6760426, -0.060981438)
+
+[node name="BodyAttach" parent="RigMesh/Armature_001/Skeleton3D" index="4" unique_id=1183210554]
+transform = Transform3D(-0.10401534, 0.013097957, -0.99448943, 0.07096615, 0.9974624, 0.005714642, 0.9920406, -0.06998068, -0.10468089, -0.0027641263, 1.283231, -0.033422276)
+
+[node name="TwoBoneIK3D" type="TwoBoneIK3D" parent="RigMesh/Armature_001/Skeleton3D" index="5" unique_id=529348050]
+setting_count = 1
+settings/0/target_node = NodePath("../../../ArmRTargetNode")
+settings/0/pole_node = NodePath("../../../ArmRTargetNode/PoleNode")
+settings/0/root_bone_name = "upper_arm.r"
+settings/0/root_bone = 3
+settings/0/middle_bone_name = "lower_arm.r"
+settings/0/middle_bone = 4
+settings/0/pole_direction = 0
+settings/0/end_bone_name = "hand.r"
+settings/0/end_bone = 5
+settings/0/use_virtual_end = false
+settings/0/extend_end_bone = true
+settings/0/end_bone/direction = 6
+settings/0/end_bone/length = 0.0
+
+[node name="ArmRTargetNode" type="Marker3D" parent="RigMesh" unique_id=1563027629]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29116592, 1.4219277, 0.7859875)
+
+[node name="PoleNode" type="Node3D" parent="RigMesh/ArmRTargetNode" unique_id=2069075672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2053922675]
 shape = SubResource("CapsuleShape3D_qabgp")
@@ -189,13 +190,6 @@ mouse_filter = 2
 mouse_force_pass_scroll_events = false
 color = Color(0.86898494, 0.8689849, 0.8689849, 1)
 
-[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1111084741]
-root_node = NodePath("../RigMesh")
-tree_root = SubResource("AnimationNodeBlendTree_q3lat")
-anim_player = NodePath("../RigMesh/AnimationPlayer")
-parameters/Blend2/blend_amount = 0.0
-script = ExtResource("5_p47bc")
-
 [node name="CameraPos" type="Node3D" parent="." unique_id=1111452330]
 editor_description = "the camera position for first person
 "
@@ -203,5 +197,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.65, 0)
 
 [node name="Camera3D" type="Camera3D" parent="CameraPos" unique_id=1457507785]
 script = ExtResource("2_ky53y")
+
+[node name="AnimationTree" type="AnimationTree" parent="." unique_id=1015618736]
+root_node = NodePath("../RigMesh")
+tree_root = SubResource("AnimationNodeBlendTree_75vfm")
+anim_player = NodePath("../RigMesh/AnimationPlayer")
+parameters/Blend2/blend_amount = 0.0
+script = ExtResource("5_p47bc")
 
 [editable path="RigMesh"]

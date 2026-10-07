@@ -8,7 +8,8 @@ extends Camera3D
 var camera_rotate_x := 0.0 #current rotation around x axis
 var camera_rotate_y := 0.0 #current rotation around y axis
 @export var ray_length := 1000.0
-var _current_selected_target: Node = null
+var _current_target: Node3D = null
+var _last_target: Node3D
 
 #neck bone placement
 @onready var player := owner
@@ -16,6 +17,9 @@ var _current_selected_target: Node = null
 @onready var skeleton := rig_mesh.get_node("Armature_001/Skeleton3D") as Skeleton3D
 @onready var headBone = skeleton.find_bone("Bone.002")
 @onready var head_rotation_mod := skeleton.get_node("HeadRotation")
+
+@onready var hand_slot = skeleton.get_node("HandRAttach/AttachSpot")
+
 
 #camera modes and the location each camera is place under in each camera mode
 enum CameraMode{
@@ -60,22 +64,25 @@ func _physics_process(delta: float) -> void:
 	var space_state := get_world_3d().direct_space_state
 	var result := space_state.intersect_ray(query)
 	
+	_last_target = _current_target
+	
 	# if hit a target
 	if result:
-		var node_hit: Node = result.collider
-		if node_hit != _current_selected_target:
-			if _current_selected_target:
-				_current_selected_target.item_deselected()
-				_current_selected_target = null
-			if node_hit.is_in_group("item"):
-				node_hit.item_selected()
-				_current_selected_target = node_hit
-			else:
-				_current_selected_target = null
+		_current_target = result.collider
 	else:
-		if _current_selected_target:
-			_current_selected_target.item_deselected()
-			_current_selected_target = null
+		_current_target = null
+	
+	evaluate_target()
+
+func evaluate_target():
+	if _last_target != _current_target:
+		if _last_target:
+			if _last_target.is_in_group("item"):
+				_last_target.item_deselected()
+		if _current_target:
+			if _current_target.is_in_group("item"):
+				_current_target.item_selected()
+
 
 ## this function should only be called from the main input manager
 func process_mouse_delta(event: InputEvent) -> void:
@@ -95,7 +102,7 @@ var camera_funcs = [
 		
 	func(y:float, x:float)->void: #First person
 		player.rotation_degrees.y = y
-		rotation_degrees.x = x
+		cam_locations[CameraMode.FIRST_PERSON].rotation_degrees.x = x
 		rig_mesh.position = Vector3(0, -0.86, camera_rotate_x/-90 * 0.3),
 	func(y:float, _x:float)->void: #third person
 		player.rotation_degrees.y = y
@@ -110,6 +117,11 @@ func set_camera_rotation(rotation_x, rotation_y) -> void:
 	camera_rotate_y = rotation_y
 	camera_rotate_x = rotation_x
 	camera_funcs[camera_mode].call(camera_rotate_y, camera_rotate_x)
+
+
+func interact_item():
+	if _current_target.is_in_group("item"):
+		_current_target.equipped(skeleton)
 
 
 func apply_mousemode():

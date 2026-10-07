@@ -4,13 +4,19 @@
 [ext_resource type="ArrayMesh" uid="uid://c56erkka8aer8" path="res://global_resources/inherited/new_array_mesh.tres" id="3_m28fq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_sc6p2"]
-size = Vector3(0.8, 0.4, 0.1)
+size = Vector3(0.627124, 0.27311403, 0.1)
 
 [node name="Item" unique_id=1202617992 instance=ExtResource("1_jufws")]
+handle_position = Vector3(0.13889122, 0.03587246, -0.0036773682)
+handle_rotation = Vector3(0.05841722, -3.052492, 1.9316804)
 
 [node name="ItemMesh" parent="." index="0" unique_id=1430172501]
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, 0, 0)
 mesh = ExtResource("3_m28fq")
 
 [node name="CollisionShape3D" parent="." index="1" unique_id=1739738588]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.129, -0.07, 0)
+transform = Transform3D(0.99999994, 0, 0, 0, 1, 0, 0, 0, 1, 0.09660238, -0.06551196, 0)
 shape = SubResource("BoxShape3D_sc6p2")
+
+[node name="Muzzle" type="Marker3D" parent="." index="2" unique_id=1691085376]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.41748622, 0.025608446, 0)

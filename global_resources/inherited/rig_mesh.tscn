@@ -1,5 +1,35 @@
 [gd_scene format=3 uid="uid://ctigudemkhbdq"]
 
 [ext_resource type="PackedScene" uid="uid://cngu1bj0j1pqa" path="res://global_resources/mesh/character/rig_mesh.glb" id="1_oiwac"]
+[ext_resource type="PackedScene" uid="uid://4tvag2j57mtq" path="res://global_resources/inherited/bullet_proof_vest.tscn" id="2_jxwop"]
 
 [node name="RigMesh" unique_id=1531407070 instance=ExtResource("1_oiwac")]
+
+[node name="HandRAttach" type="BoneAttachment3D" parent="Armature_001/Skeleton3D" parent_id_path=PackedInt32Array(1364311360) index="1" unique_id=172067122]
+transform = Transform3D(0.027226267, -0.9910842, 0.13042621, 0.008093692, -0.13025168, -0.9914479, 0.9995965, 0.028049083, 0.004475266, -0.9972747, 1.5526134, 0.020328205)
+bone_name = "hand.r"
+bone_idx = 5
+
+[node name="AttachSpot" type="Node3D" parent="Armature_001/Skeleton3D/HandRAttach" index="0" unique_id=1291491568]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+
+[node name="HeadAttach" type="BoneAttachment3D" parent="Armature_001/Skeleton3D" parent_id_path=PackedInt32Array(1364311360) index="2" unique_id=894871911]
+transform = Transform3D(-0.10702423, 0.012886308, -0.9941729, -0.18228112, 0.98271406, 0.032360613, 0.9774044, 0.18468232, -0.10282524, 0.0023939952, 1.67659, -0.05156371)
+bone_name = "Bone.002"
+bone_idx = 10
+
+[node name="AttachSpot" type="Node3D" parent="Armature_001/Skeleton3D/HeadAttach" index="0" unique_id=2105225384]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+
+[node name="CameraPos" type="Node3D" parent="Armature_001/Skeleton3D/HeadAttach" index="1" unique_id=1446836544]
+transform = Transform3D(0.10740523, -0.20529315, -0.9727892, -0.0136570735, 0.9780523, -0.2079117, 0.99412155, 0.03561626, 0.10224423, -0.15, 0.45, 0.21)
+
+[node name="BodyAttach" type="BoneAttachment3D" parent="Armature_001/Skeleton3D" parent_id_path=PackedInt32Array(1364311360) index="3" unique_id=1183210554]
+transform = Transform3D(-0.104015365, 0.013097957, -0.99448943, 0.047181387, 0.9988526, 0.008220638, 0.99345595, -0.04606633, -0.10451397, -0.0027641251, 1.283231, -0.033422276)
+bone_name = "Bone.001"
+bone_idx = 1
+
+[node name="AttachSpot" type="Node3D" parent="Armature_001/Skeleton3D/BodyAttach" index="0" unique_id=1146030585]
+
+[node name="Vest_Vest_0" parent="Armature_001/Skeleton3D/BodyAttach/AttachSpot" index="0" unique_id=2010410711 instance=ExtResource("2_jxwop")]
+transform = Transform3D(-0.0014606108, 0.0017709995, 0.011753042, -2.4857745e-06, 0.010854281, -0.0019467726, -0.011910777, -0.00021944178, -0.0014408615, 0.088, 0.17, -0.016)

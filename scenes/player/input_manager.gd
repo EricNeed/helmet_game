@@ -21,6 +21,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	
 	elif event.is_action_pressed("shift"):
 		pass
+		
+	elif event.is_action_pressed("interact"):
+		camera.interact_item()
 	else:
 		return
 	
