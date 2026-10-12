@@ -95,34 +95,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.059803, 2.239043, 2.020064)
 [node name="RigMesh" parent="." unique_id=1531407070 instance=ExtResource("4_10nt2")]
 transform = Transform3D(-0.9999539, 0, -0.009597719, 0, 1, 0, 0.009597719, 0, -0.9999539, 2.3618765, 0.02301693, 1.3810549)
 
-[node name="Skeleton3D" parent="RigMesh/Armature_001" parent_id_path=PackedInt32Array(1531407070, 1551021247) index="0" unique_id=1364311360]
-bones/0/rotation = Quaternion(-0.023031306, -0.70673144, 0.02283893, 0.70673805)
-bones/1/rotation = Quaternion(-0.0073649483, -0.051958695, -0.018103873, 0.998458)
-bones/3/rotation = Quaternion(0.55750364, 0.03822196, 0.062809266, 0.82691216)
-bones/4/rotation = Quaternion(0.05811478, 0.0014195027, 0.012465537, 0.9982311)
-bones/6/rotation = Quaternion(-0.003087703, -0.6143469, 0.78861237, -0.025668245)
-bones/7/rotation = Quaternion(0.55750173, -0.038214963, -0.06281739, 0.82691324)
-bones/8/rotation = Quaternion(0.058114752, -0.0014195113, -0.012465526, 0.9982311)
-bones/10/rotation = Quaternion(-0.012943523, 0.00010527155, -0.12296426, 0.99232674)
-bones/11/rotation = Quaternion(-0.68433726, 0.021981766, 0.72873414, -0.012080974)
-bones/12/rotation = Quaternion(-0.0139162075, -0.0004708979, -0.05697474, 0.9982785)
-bones/13/rotation = Quaternion(0.04749582, -0.002414982, 0.7127079, 0.699847)
-bones/14/rotation = Quaternion(0.68433726, 0.021981766, 0.72873414, 0.012080974)
-bones/15/rotation = Quaternion(-0.0139162075, 0.0004708979, 0.05697474, 0.9982785)
-bones/16/rotation = Quaternion(0.04749582, 0.002414982, -0.7127079, 0.699847)
-
-[node name="HandRAttach" parent="RigMesh/Armature_001/Skeleton3D" index="1" unique_id=172067122]
-transform = Transform3D(-0.0072876755, 0.09304608, 0.9956349, 0.0062746624, -0.99563825, 0.09309227, 0.9999537, 0.006925715, 0.006672016, -0.34973112, 0.90107155, 0.011234971)
-
-[node name="HeadAttach" parent="RigMesh/Armature_001/Skeleton3D" index="2" unique_id=894871911]
-transform = Transform3D(0.99999994, 0, 0, 0, 1.0000002, 0, 0, 0, 0.99999994, 0.0023939926, 1.6768544, -0.044428147)
-
-[node name="Marker3D" type="Marker3D" parent="RigMesh/Armature_001/Skeleton3D/HeadAttach" index="2" unique_id=927255742]
-
-[node name="BodyAttach" parent="RigMesh/Armature_001/Skeleton3D" index="3" unique_id=1183210554]
-transform = Transform3D(-0.10401535, 0.013097953, -0.99448943, 0.029159801, 0.9995237, 0.010114381, 0.9941481, -0.027947068, -0.1043477, -0.0027641263, 1.283231, -0.033422276)
-
-[node name="AnimationPlayer" parent="RigMesh" index="1" unique_id=821444301]
-active = false
-
-[editable path="RigMesh"]
+[node name="Marker3D" type="Marker3D" parent="RigMesh" unique_id=927255742]
+transform = Transform3D(-0.10702423, 0.012886301, -0.994173, -0.21561983, 0.97581893, 0.0358602, 0.97059464, 0.21820128, -0.10165767, 0.0023941994, 1.6768544, -0.04442811)

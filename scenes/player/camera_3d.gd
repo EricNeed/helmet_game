@@ -120,8 +120,8 @@ func set_camera_rotation(rotation_x, rotation_y) -> void:
 
 
 func interact_item():
-	if _current_target.is_in_group("item"):
-		_current_target.equipped(skeleton)
+	if _current_target and _current_target.is_in_group("item"):
+		_current_target.equipped(rig_mesh, skeleton)
 
 
 func apply_mousemode():

@@ -1,11 +1,15 @@
 [gd_scene format=3 uid="uid://cbg2ruj1ud8du"]
 
-[ext_resource type="Script" uid="uid://ygi4ogrktl6o" path="res://scenes/player/player.gd" id="1_h00vy"]
+[ext_resource type="Script" uid="uid://ygi4ogrktl6o" path="res://scenes/player/movement.gd" id="1_h00vy"]
 [ext_resource type="PackedScene" uid="uid://ctigudemkhbdq" path="res://global_resources/inherited/rig_mesh.tscn" id="2_75vfm"]
 [ext_resource type="Script" uid="uid://5q42fy0iftyu" path="res://scenes/player/camera_3d.gd" id="2_ky53y"]
 [ext_resource type="Script" uid="uid://bc8n5xvwqph04" path="res://scenes/player/input_manager.gd" id="3_bvqhm"]
 [ext_resource type="Script" uid="uid://d3kpyhljgpgo7" path="res://scenes/player/bone_rotation_mod.gd" id="4_0owmy"]
+[ext_resource type="Script" uid="uid://1xhxm11vyt7h" path="res://scenes/player/arm_ik.gd" id="4_qek5x"]
 [ext_resource type="Script" uid="uid://dwbvcmd0i7o6f" path="res://scenes/player/action_manager.gd" id="5_p47bc"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_qabgp"]
+size = Vector3(0.05, 0.3, 0.05)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_qabgp"]
 radius = 0.3
@@ -79,17 +83,17 @@ node_connections = [&"output", 0, &"Blend2", &"Blend2", 0, &"AnimFullBody", &"Bl
 script = ExtResource("1_h00vy")
 
 [node name="RigMesh" parent="." unique_id=1531407070 instance=ExtResource("2_75vfm")]
-transform = Transform3D(-0.8, 0, -6.9938224e-08, 0, 0.8, 0, 6.9938224e-08, 0, -0.8, 0, -0.86, 0)
+transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -0.86, 0)
 
 [node name="Skeleton3D" parent="RigMesh/Armature_001" parent_id_path=PackedInt32Array(1531407070, 1551021247) index="0" unique_id=1364311360]
 bones/0/rotation = Quaternion(-0.023031306, -0.70673144, 0.02283893, 0.70673805)
-bones/1/rotation = Quaternion(-0.0062701865, -0.052107893, 0.002911526, 0.9986176)
-bones/3/rotation = Quaternion(0.5517392, 0.018583871, 0.0855102, 0.82941335)
+bones/1/rotation = Quaternion(-0.006751886, -0.05204514, -0.0063286377, 0.99860185)
+bones/3/rotation = Quaternion(0.5543177, 0.027153023, 0.075616956, 0.82841814)
 bones/4/rotation = Quaternion(0.05811478, 0.0014195027, 0.012465537, 0.9982311)
 bones/6/rotation = Quaternion(-0.003087703, -0.6143469, 0.78861237, -0.025668245)
-bones/7/rotation = Quaternion(0.55174094, -0.018590044, -0.08550309, 0.8294128)
+bones/7/rotation = Quaternion(0.5543213, -0.02716504, -0.07560307, 0.8284167)
 bones/8/rotation = Quaternion(0.058114752, -0.0014195113, -0.012465526, 0.9982311)
-bones/10/rotation = Quaternion(-0.015353544, 0.00040667504, -0.14567119, 0.9892138)
+bones/10/rotation = Quaternion(-0.014302597, 0.0002751437, -0.13576937, 0.9906372)
 bones/11/rotation = Quaternion(-0.68433726, 0.021981766, 0.72873414, -0.012080974)
 bones/12/rotation = Quaternion(-0.0139162075, -0.0004708979, -0.05697474, 0.9982785)
 bones/13/rotation = Quaternion(0.04749582, -0.002414982, 0.7127079, 0.699847)
@@ -120,16 +124,17 @@ reduction_strength = 0.8
 metadata/_custom_type_script = "uid://d3kpyhljgpgo7"
 
 [node name="HandRAttach" parent="RigMesh/Armature_001/Skeleton3D" index="2" unique_id=172067122]
-transform = Transform3D(0.094874315, 0.111341104, 0.9892429, 0.97406715, -0.2154268, -0.069172285, 0.20540763, 0.97015184, -0.12889211, -0.29251567, 1.4470211, 0.6727212)
+transform = Transform3D(-0.0062147435, -0.007226415, 0.9999543, 0.013701823, -0.9998809, -0.0071408376, 0.9998867, 0.013656821, 0.0063130334, -0.37506145, 0.90284824, -0.00091853226)
 
 [node name="HeadAttach" parent="RigMesh/Armature_001/Skeleton3D" index="3" unique_id=894871911]
-transform = Transform3D(-0.107024215, 0.012886308, -0.99417293, -0.21950574, 0.974937, 0.036267098, 0.9697231, 0.22210811, -0.10151323, 0.002393994, 1.6760426, -0.060981438)
+transform = Transform3D(-0.107024245, 0.012886295, -0.9941729, -0.21794114, 0.97529405, 0.036103286, 0.97007596, 0.2205351, -0.10157161, 0.0023939926, 1.6764853, -0.053707786)
 
 [node name="BodyAttach" parent="RigMesh/Armature_001/Skeleton3D" index="4" unique_id=1183210554]
-transform = Transform3D(-0.10401534, 0.013097957, -0.99448943, 0.07096615, 0.9974624, 0.005714642, 0.9920406, -0.06998068, -0.10468089, -0.0027641263, 1.283231, -0.033422276)
+transform = Transform3D(-0.10401537, 0.013097953, -0.99448943, 0.0525964, 0.9985866, 0.0076507665, 0.9931839, -0.05151077, -0.10455723, -0.0027641263, 1.283231, -0.033422276)
 
-[node name="TwoBoneIK3D" type="TwoBoneIK3D" parent="RigMesh/Armature_001/Skeleton3D" index="5" unique_id=529348050]
-setting_count = 1
+[node name="ArmIK" type="TwoBoneIK3D" parent="RigMesh/Armature_001/Skeleton3D" index="5" unique_id=529348050]
+mutable_bone_axes = false
+setting_count = 2
 settings/0/target_node = NodePath("../../../ArmRTargetNode")
 settings/0/pole_node = NodePath("../../../ArmRTargetNode/PoleNode")
 settings/0/root_bone_name = "upper_arm.r"
@@ -142,13 +147,41 @@ settings/0/end_bone = 5
 settings/0/use_virtual_end = false
 settings/0/extend_end_bone = true
 settings/0/end_bone/direction = 6
-settings/0/end_bone/length = 0.0
+settings/0/end_bone/length = 0.12
+settings/1/target_node = NodePath("../../../ArmLTargetNode")
+settings/1/pole_node = NodePath("../../../ArmLTargetNode/PoleNode")
+settings/1/root_bone_name = "upper_arm.l"
+settings/1/root_bone = 7
+settings/1/middle_bone_name = "lower_arm.l"
+settings/1/middle_bone = 8
+settings/1/pole_direction = 0
+settings/1/end_bone_name = "hand.l"
+settings/1/end_bone = 9
+settings/1/use_virtual_end = false
+settings/1/extend_end_bone = true
+settings/1/end_bone/direction = 6
+settings/1/end_bone/length = 0.12
+script = ExtResource("4_qek5x")
 
 [node name="ArmRTargetNode" type="Marker3D" parent="RigMesh" unique_id=1563027629]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.29116592, 1.4219277, 0.7859875)
+transform = Transform3D(1.0000001, 0, 0, 0, 1, 0, 0, 0, 1.0000001, 0.4, 0.67, 0)
 
 [node name="PoleNode" type="Node3D" parent="RigMesh/ArmRTargetNode" unique_id=2069075672]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="ArmLTargetNode" type="Marker3D" parent="RigMesh" unique_id=804148885]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.4, 0.67, 0)
+
+[node name="PoleNode" type="Node3D" parent="RigMesh/ArmLTargetNode" unique_id=1912861710]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="RigMesh/ArmLTargetNode" unique_id=1256055105]
+mesh = SubResource("BoxMesh_qabgp")
+
+[node name="ItemHolder" type="Node3D" parent="RigMesh" unique_id=1893595967]
+
+[node name="ItemParent" type="Node3D" parent="RigMesh/ItemHolder" unique_id=92151497]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5239619, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2053922675]
 shape = SubResource("CapsuleShape3D_qabgp")
