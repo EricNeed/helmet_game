@@ -9,13 +9,22 @@ var hands_item: Array[ItemBase] = [null, null]
 var hands_offset: Array[Transform3D] = [Transform3D.IDENTITY, Transform3D.IDENTITY]
 
 
+func _ready() -> void:
+	_enable_ik(Hands.LEFT, false);	_enable_ik(Hands.RIGHT, false)
+
+
 ## new item in hand
 func set_hands_target(target: ItemBase, _hand_l_transform: Transform3D, _hand_r_transform: Transform3D):
+	_enable_ik(Hands.LEFT, true);	_enable_ik(Hands.RIGHT, true)
 	hands_item[Hands.LEFT] = target
 	hands_item[Hands.RIGHT] = target
 	hands_offset[Hands.LEFT] = _hand_l_transform
 	hands_offset[Hands.RIGHT] = _hand_r_transform
 
+## turn on or off of ik
+func _enable_ik(hand: Hands, enable: bool):
+	var value := hands_target[hand].get_path() if enable else NodePath("")
+	set_target_node(hand, value)
 
 ## because the pole node of TwoBoneIK3D is a child of target of TwoBoneIK3D, so rotate the target positions the pole node
 func set_hands_target_rotation(_target_r_rotation: Vector3, _target_l_rotation: Vector3):

@@ -1,5 +1,5 @@
 extends CharacterBody3D
-## master player control script
+## movement and collision control
 ## contain the code for:
 ## 	- player movement
 ##	- phisics: jump and fall and movement velocity

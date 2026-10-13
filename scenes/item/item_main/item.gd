@@ -63,6 +63,7 @@ func equipped(character: Node3D, skeleton: Skeleton3D):
 	rotation = Vector3.ZERO
 	_ik_handler.set_hands_target(self, hands_placement[Hands.LEFT], hands_placement[Hands.RIGHT])
 	make_static(true)
+	
 ## should be called when item is unequipped
 func unequipped():
 	make_static(false)

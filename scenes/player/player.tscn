@@ -57,19 +57,21 @@ animation = &"Idel"
 [sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_i5acl"]
 advance_mode = 2
 
-[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_epg6k"]
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_h17s1"]
 advance_mode = 2
 
 [sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_0u84n"]
+states/End/position = Vector2(557, 109)
 states/Idel/node = SubResource("AnimationNodeAnimation_0kmp4")
 states/Idel/position = Vector2(557, 40)
-transitions = ["Start", "Idel", SubResource("AnimationNodeStateMachineTransition_i5acl"), "Idel", "End", SubResource("AnimationNodeStateMachineTransition_epg6k")]
+transitions = ["Start", "Idel", SubResource("AnimationNodeStateMachineTransition_i5acl"), "Start", "End", SubResource("AnimationNodeStateMachineTransition_h17s1")]
 
 [sub_resource type="AnimationNodeBlend2" id="AnimationNodeBlend2_q3lat"]
 filter_enabled = true
 filters = ["Armature/Skeleton3D:Bone", "Armature/Skeleton3D:Bone.001", "Armature/Skeleton3D:lower_arm.l", "Armature/Skeleton3D:lower_arm.r", "Armature/Skeleton3D:shulder.l", "Armature/Skeleton3D:upper_arm.l", "Armature/Skeleton3D:upper_arm.r", "Armature_001/Skeleton3D:Bone", "Armature_001/Skeleton3D:Bone.001", "Armature_001/Skeleton3D:Bone.002", "Armature_001/Skeleton3D:lower_arm.l", "Armature_001/Skeleton3D:lower_arm.r", "Armature_001/Skeleton3D:shulder.l", "Armature_001/Skeleton3D:upper_arm.l", "Armature_001/Skeleton3D:upper_arm.r"]
 
 [sub_resource type="AnimationNodeBlendTree" id="AnimationNodeBlendTree_75vfm"]
+graph_offset = Vector2(-984.0291, 57.938972)
 nodes/output/position = Vector2(-40, 60)
 nodes/Blend2/node = SubResource("AnimationNodeBlend2_q3lat")
 nodes/Blend2/position = Vector2(-280, 60)
@@ -82,18 +84,21 @@ node_connections = [&"output", 0, &"Blend2", &"Blend2", 0, &"AnimFullBody", &"Bl
 [node name="Player" type="CharacterBody3D" unique_id=714137968]
 script = ExtResource("1_h00vy")
 
+[node name="InputManager" type="Node" parent="." unique_id=940193678]
+script = ExtResource("3_bvqhm")
+
 [node name="RigMesh" parent="." unique_id=1531407070 instance=ExtResource("2_75vfm")]
 transform = Transform3D(0.8, 0, 0, 0, 0.8, 0, 0, 0, 0.8, 0, -0.86, 0)
 
 [node name="Skeleton3D" parent="RigMesh/Armature_001" parent_id_path=PackedInt32Array(1531407070, 1551021247) index="0" unique_id=1364311360]
 bones/0/rotation = Quaternion(-0.023031306, -0.70673144, 0.02283893, 0.70673805)
-bones/1/rotation = Quaternion(-0.006751886, -0.05204514, -0.0063286377, 0.99860185)
-bones/3/rotation = Quaternion(0.5543177, 0.027153023, 0.075616956, 0.82841814)
+bones/1/rotation = Quaternion(-0.009242862, -0.05164777, -0.054280903, 0.99714625)
+bones/3/rotation = Quaternion(0.5662006, 0.07195236, 0.02358226, 0.8207823)
 bones/4/rotation = Quaternion(0.05811478, 0.0014195027, 0.012465537, 0.9982311)
 bones/6/rotation = Quaternion(-0.003087703, -0.6143469, 0.78861237, -0.025668245)
-bones/7/rotation = Quaternion(0.5543213, -0.02716504, -0.07560307, 0.8284167)
+bones/7/rotation = Quaternion(0.56619376, -0.071923494, -0.023615913, 0.82078856)
 bones/8/rotation = Quaternion(0.058114752, -0.0014195113, -0.012465526, 0.9982311)
-bones/10/rotation = Quaternion(-0.014302597, 0.0002751437, -0.13576937, 0.9906372)
+bones/10/rotation = Quaternion(-0.00877259, -0.00041446325, -0.08366493, 0.99645525)
 bones/11/rotation = Quaternion(-0.68433726, 0.021981766, 0.72873414, -0.012080974)
 bones/12/rotation = Quaternion(-0.0139162075, -0.0004708979, -0.05697474, 0.9982785)
 bones/13/rotation = Quaternion(0.04749582, -0.002414982, 0.7127079, 0.699847)
@@ -124,39 +129,39 @@ reduction_strength = 0.8
 metadata/_custom_type_script = "uid://d3kpyhljgpgo7"
 
 [node name="HandRAttach" parent="RigMesh/Armature_001/Skeleton3D" index="2" unique_id=172067122]
-transform = Transform3D(-0.0062147435, -0.007226415, 0.9999543, 0.013701823, -0.9998809, -0.0071408376, 0.9998867, 0.013656821, 0.0063130334, -0.37506145, 0.90284824, -0.00091853226)
+transform = Transform3D(-0.013132451, -0.0077472255, 0.99988353, -0.018043403, -0.9998057, -0.007983692, 0.99975085, -0.018146154, 0.012990091, -0.37537503, 0.8988535, 0.006535951)
 
 [node name="HeadAttach" parent="RigMesh/Armature_001/Skeleton3D" index="3" unique_id=894871911]
-transform = Transform3D(-0.107024245, 0.012886295, -0.9941729, -0.21794114, 0.97529405, 0.036103286, 0.97007596, 0.2205351, -0.10157161, 0.0023939926, 1.6764853, -0.053707786)
+transform = Transform3D(-0.107024215, 0.012886308, -0.9941729, -0.20884313, 0.97731745, 0.035150107, 0.9720752, 0.21138807, -0.101905376, 0.0023939908, 1.6766174, -0.015884347)
 
 [node name="BodyAttach" parent="RigMesh/Armature_001/Skeleton3D" index="4" unique_id=1183210554]
-transform = Transform3D(-0.10401537, 0.013097953, -0.99448943, 0.0525964, 0.9985866, 0.0076507665, 0.9931839, -0.05151077, -0.10455723, -0.0027641263, 1.283231, -0.033422276)
+transform = Transform3D(-0.10401535, 0.013097948, -0.99448943, -0.042934984, 0.9989221, 0.01764697, 0.99364847, 0.044533916, -0.10334084, -0.0027641263, 1.283231, -0.033422276)
 
 [node name="ArmIK" type="TwoBoneIK3D" parent="RigMesh/Armature_001/Skeleton3D" index="5" unique_id=529348050]
 mutable_bone_axes = false
 setting_count = 2
-settings/0/target_node = NodePath("../../../ArmRTargetNode")
-settings/0/pole_node = NodePath("../../../ArmRTargetNode/PoleNode")
-settings/0/root_bone_name = "upper_arm.r"
-settings/0/root_bone = 3
-settings/0/middle_bone_name = "lower_arm.r"
-settings/0/middle_bone = 4
+settings/0/target_node = NodePath("../../../ArmLTargetNode")
+settings/0/pole_node = NodePath("../../../ArmLTargetNode/PoleNode")
+settings/0/root_bone_name = "upper_arm.l"
+settings/0/root_bone = 7
+settings/0/middle_bone_name = "lower_arm.l"
+settings/0/middle_bone = 8
 settings/0/pole_direction = 0
-settings/0/end_bone_name = "hand.r"
-settings/0/end_bone = 5
+settings/0/end_bone_name = "hand.l"
+settings/0/end_bone = 9
 settings/0/use_virtual_end = false
 settings/0/extend_end_bone = true
 settings/0/end_bone/direction = 6
 settings/0/end_bone/length = 0.12
-settings/1/target_node = NodePath("../../../ArmLTargetNode")
-settings/1/pole_node = NodePath("../../../ArmLTargetNode/PoleNode")
-settings/1/root_bone_name = "upper_arm.l"
-settings/1/root_bone = 7
-settings/1/middle_bone_name = "lower_arm.l"
-settings/1/middle_bone = 8
+settings/1/target_node = NodePath("../../../ArmRTargetNode")
+settings/1/pole_node = NodePath("../../../ArmRTargetNode/PoleNode")
+settings/1/root_bone_name = "upper_arm.r"
+settings/1/root_bone = 3
+settings/1/middle_bone_name = "lower_arm.r"
+settings/1/middle_bone = 4
 settings/1/pole_direction = 0
-settings/1/end_bone_name = "hand.l"
-settings/1/end_bone = 9
+settings/1/end_bone_name = "hand.r"
+settings/1/end_bone = 5
 settings/1/use_virtual_end = false
 settings/1/extend_end_bone = true
 settings/1/end_bone/direction = 6
@@ -185,9 +190,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5239619, 0)
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=2053922675]
 shape = SubResource("CapsuleShape3D_qabgp")
-
-[node name="InputManager" type="Node" parent="." unique_id=940193678]
-script = ExtResource("3_bvqhm")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=353987566]
 editor_description = "Container for 2d element in 3d node."

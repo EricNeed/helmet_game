@@ -7,18 +7,16 @@ extends Camera3D
 @export var camera_sensitivity := 0.2
 var camera_rotate_x := 0.0 #current rotation around x axis
 var camera_rotate_y := 0.0 #current rotation around y axis
-@export var ray_length := 1000.0
-var _current_target: Node3D = null
-var _last_target: Node3D
+var ray_length := 1000.0
+var current_target: Node3D = null
+var last_target: Node3D
 
 #neck bone placement
-@onready var player := owner
-@onready var rig_mesh := player.get_node("RigMesh")
-@onready var skeleton := rig_mesh.get_node("Armature_001/Skeleton3D") as Skeleton3D
-@onready var headBone = skeleton.find_bone("Bone.002")
-@onready var head_rotation_mod := skeleton.get_node("HeadRotation")
+@onready var IM = $"../../InputManager" ## IM: input manager
+@onready var headBone = IM.skeleton.find_bone("Bone.002")
+@onready var head_rotation_mod: BoneRotationModifier = IM.skeleton.get_node("HeadRotation")
 
-@onready var hand_slot = skeleton.get_node("HandRAttach/AttachSpot")
+@onready var hand_slot = IM.skeleton.get_node("HandRAttach/AttachSpot")
 
 
 #camera modes and the location each camera is place under in each camera mode
@@ -28,9 +26,9 @@ enum CameraMode{
 	THIRD_PERSON,
 }
 @onready var cam_locations: Array[Node3D] = [ #coorespond to camera location of 3 camera mode
-	player.get_node("RigMesh/Armature_001/Skeleton3D/HeadAttach/CameraPos"),
-	player.get_node("CameraPos"),
-	player.get_node("CameraPos"),
+	IM.skeleton.get_node("HeadAttach/CameraPos"),
+	IM.player.get_node("CameraPos"),
+	IM.player.get_node("CameraPos"),
 ]
 
 # the area mouse is allowed to move in helmet view, not use currently
@@ -45,15 +43,14 @@ var calc_mouse_move_area = func() -> void:
 
 
 func _ready() -> void:
-	if headBone != -1:
-		skeleton.set_bone_pose_scale(headBone, Vector3.ZERO)
+	camera_mode = CameraMode.FIRST_PERSON
 	# call the function when screen size change
 	calc_mouse_move_area.call()
 	viewport.size_changed.connect(calc_mouse_move_area)
 
 
 ## the raycast function to resolve both interactiion and target detection
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	var center_screen := get_viewport().get_visible_rect().size / 2.0
 	var origin := project_ray_origin(center_screen)
 	var end := origin + project_ray_normal(center_screen) * ray_length
@@ -64,29 +61,29 @@ func _physics_process(delta: float) -> void:
 	var space_state := get_world_3d().direct_space_state
 	var result := space_state.intersect_ray(query)
 	
-	_last_target = _current_target
+	last_target = current_target
 	
 	# if hit a target
 	if result:
-		_current_target = result.collider
+		current_target = result.collider
 	else:
-		_current_target = null
+		current_target = null
 	
 	evaluate_target()
 
 func evaluate_target():
-	if _last_target != _current_target:
-		if _last_target:
-			if _last_target.is_in_group("item"):
-				_last_target.item_deselected()
-		if _current_target:
-			if _current_target.is_in_group("item"):
-				_current_target.item_selected()
+	if last_target != current_target:
+		if last_target:
+			if last_target.is_in_group("item"):
+				last_target.item_deselected()
+		if current_target:
+			if current_target.is_in_group("item"):
+				current_target.item_selected()
 
 
 ## this function should only be called from the main input manager
 func process_mouse_delta(event: InputEvent) -> void:
-	#rotate the entire player node around Y axis (left and right)
+	#rotate the entire IM.player node around Y axis (left and right)
 	camera_rotate_y -= event.screen_relative.x * camera_sensitivity
 	#rotate the cramera along its x axis (up and down)
 	camera_rotate_x -= event.screen_relative.y * camera_sensitivity
@@ -98,30 +95,25 @@ func process_mouse_delta(event: InputEvent) -> void:
 	head_rotation_mod.change_rotation(camera_rotate_x, camera_rotate_y)
 var camera_funcs = [
 	func(y:float, _x:float)->void: #HELMET
-		player.rotation_degrees.y = y,
+		IM.player.rotation_degrees.y = y,
 		
 	func(y:float, x:float)->void: #First person
-		player.rotation_degrees.y = y
+		IM.player.rotation_degrees.y = y
 		cam_locations[CameraMode.FIRST_PERSON].rotation_degrees.x = x
-		rig_mesh.position = Vector3(0, -0.86, camera_rotate_x/-90 * 0.3),
+		IM.rig_mesh.position = Vector3(0, -0.86, camera_rotate_x/-90 * 0.3),
 	func(y:float, _x:float)->void: #third person
-		player.rotation_degrees.y = y
+		IM.player.rotation_degrees.y = y
 ]
 
 
 # get camera rotation, for other scripts
 func get_camera_rotation() -> Vector2:
 	return Vector2(camera_rotate_x, camera_rotate_y)
-# get camera rotation, for other scripts, eg: force player to look some where
+# get camera rotation, for other scripts, eg: force IM.player to look some where
 func set_camera_rotation(rotation_x, rotation_y) -> void:
 	camera_rotate_y = rotation_y
 	camera_rotate_x = rotation_x
 	camera_funcs[camera_mode].call(camera_rotate_y, camera_rotate_x)
-
-
-func interact_item():
-	if _current_target and _current_target.is_in_group("item"):
-		_current_target.equipped(rig_mesh, skeleton)
 
 
 func apply_mousemode():
@@ -141,11 +133,11 @@ func apply_mousemode():
 		else:
 			head_size = Vector3.ONE
 			head_rotation_mod.active = true
-			rig_mesh.position = Vector3(0, -0.86, 0)
+			IM.rig_mesh.position = Vector3(0, -0.86, 0)
 		
 		head_rotation_mod.reduction_strength = 0.8 if value == CameraMode.HELMET_VIEW else 0.01
 		
-		skeleton.set_bone_pose_scale(headBone, head_size)
+		IM.skeleton.set_bone_pose_scale(headBone, head_size)
 		camera_mode = value
 		self.reparent(cam_locations[value], false)
 		
